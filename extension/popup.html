@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Human Only — Réglages</title>
+<style>
+  :root { --sky: #38bdf8; --mint: #6ee7b7; --ink: #0f172a; --muted: #64748b; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    width: 260px;
+    font: 400 13px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    color: var(--ink); background: #fff; padding: 14px;
+  }
+  .head { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+  .logo { width: 26px; height: 26px; border-radius: 8px;
+    background: linear-gradient(135deg, var(--sky), var(--mint)); display: grid; place-items: center;
+    color: var(--ink); font-weight: 800; font-size: 13px; }
+  .head h1 { font-size: 14px; font-weight: 700; }
+  .head small { display: block; font-size: 10.5px; color: var(--muted); font-weight: 400; }
+  .row { display: flex; align-items: center; justify-content: space-between; padding: 9px 0;
+    border-top: 1px solid #f1f5f9; }
+  .row label { font-weight: 600; font-size: 12.5px; }
+  select {
+    font: 500 12px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    border: 1px solid #cbd5e1; border-radius: 8px; padding: 4px 6px; background: #fff; color: var(--ink);
+    outline: none;
+  }
+  select:focus { border-color: var(--sky); }
+  /* interrupteur */
+  .switch { position: relative; width: 40px; height: 22px; }
+  .switch input { opacity: 0; width: 0; height: 0; }
+  .slider { position: absolute; inset: 0; background: #cbd5e1; border-radius: 999px; transition: .2s; cursor: pointer; }
+  .slider::before { content: ''; position: absolute; width: 16px; height: 16px; left: 3px; top: 3px;
+    background: #fff; border-radius: 50%; transition: .2s; }
+  .switch input:checked + .slider { background: linear-gradient(90deg, var(--sky), var(--mint)); }
+  .switch input:checked + .slider::before { transform: translateX(18px); }
+  .status { font-size: 11px; color: var(--muted); padding: 8px 0; border-top: 1px solid #f1f5f9; }
+  .status b { color: var(--ink); }
+  .note { font-size: 10.5px; color: var(--muted); background: #f8fafc; border-radius: 8px;
+    padding: 8px 10px; margin-top: 8px; }
+  .foot { font-size: 10.5px; color: var(--muted); text-align: center; margin-top: 10px; }
+</style>
+</head>
+<body>
+  <div class="head">
+    <div class="logo">✦</div>
+    <h1>Human Only<small>Détection IA — v0.1.0</small></h1>
+  </div>
+
+  <div class="row">
+    <label for="ho-enabled">Activer la détection</label>
+    <span class="switch">
+      <input type="checkbox" id="ho-enabled" checked>
+      <span class="slider"></span>
+    </span>
+  </div>
+
+  <div class="row">
+    <label for="ho-level">Sensibilité</label>
+    <select id="ho-level">
+      <option value="faible">Sensible (plus de badges)</option>
+      <option value="modere" selected>Équilibré (recommandé)</option>
+      <option value="eleve">Strict (moins de badges)</option>
+    </select>
+  </div>
+
+  <div class="status" id="ho-status">Détection active — <b>100&nbsp;% local</b></div>
+
+  <div class="note">Les textes consultés sont analysés dans votre navigateur. Rien n’est envoyé, rien n’est stocké. Les badges sont des estimations heuristiques : ils peuvent se tromper.</div>
+
+  <div class="foot">Human Only · bêta 0.1.0</div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

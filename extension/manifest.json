@@ -1,0 +1,32 @@
+{
+  "manifest_version": 3,
+  "name": "Human Only",
+  "version": "0.1.0",
+  "description": "Signale discrètement le contenu probablement généré par IA pendant votre navigation. Détection heuristique 100 % locale : aucun texte ne quitte votre navigateur.",
+  "permissions": ["storage"],
+  "host_permissions": ["<all_urls>"],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["analyzer-core.js", "content-script.js"],
+      "run_at": "document_idle",
+      "all_frames": false
+    }
+  ],
+  "action": {
+    "default_title": "Human Only",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "minimum_chrome_version": "102"
+}

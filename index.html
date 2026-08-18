@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Human Only — Reprenez le contrôle de votre fil.</title>
+<meta name="description" content="Extension navigateur qui signale discrètement le contenu probablement généré par IA. Détection 100 % locale, badge discret, vous gardez le dernier mot. Accès bêta ouvert.">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#38bdf8">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:title" content="Human Only — Reprenez le contrôle de votre fil.">
+<meta property="og:description" content="Extension navigateur qui signale discrètement le contenu probablement généré par IA. Détection 100 % locale, zéro donnée envoyée. Accès bêta ouvert.">
+<meta property="og:image" content="og-image.png">
+<meta property="og:site_name" content="Human Only">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Human Only — Reprenez le contrôle de votre fil.">
+<meta name="twitter:description" content="Extension navigateur qui signale discrètement le contenu probablement généré par IA. Détection 100 % locale, zéro donnée envoyée.">
+<meta name="twitter:image" content="og-image.png">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%2338bdf8'/%3E%3Ccircle cx='32' cy='32' r='21' fill='none' stroke='%23ffffff' stroke-width='4'/%3E%3Cpath d='M20 33 l8 8 l16 -16' fill='none' stroke='%23ffffff' stroke-width='6' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='46' cy='18' r='5' fill='%236ee7b7'/%3E%3C/svg%3E">
+
+<!-- Fontes -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+
+<!-- JSON-LD : application + offres -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Human Only",
+  "applicationCategory": "BrowserApplication",
+  "operatingSystem": "Chrome, Edge, Brave, Arc (Chromium)",
+  "inLanguage": "fr",
+  "description": "Extension navigateur qui signale discrètement le contenu probablement généré par IA, grâce à une détection heuristique 100 % locale. Aucun texte n'est envoyé depuis le navigateur.",
+  "offers": [
+    { "@type": "Offer", "name": "Gratuit", "price": "0", "priceCurrency": "EUR", "description": "Badge de détection de base, navigation sans tracking, mises à jour incluses." },
+    { "@type": "Offer", "name": "Pro", "price": "3", "priceCurrency": "EUR", "description": "Badge avancé, seuil de sensibilité réglable, rapport hebdomadaire du fil, support prioritaire. Sans engagement." },
+    { "@type": "Offer", "name": "Business", "price": "9", "priceCurrency": "EUR", "description": "Pour les équipes : gestion centralisée des seuils, facture fournisseur, politique de confidentialité dédiée." }
+  ]
+}
+</script>
+
+<!-- JSON-LD : FAQ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "L'extension est-elle fiable à 100 % ?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Non : la détection est heuristique (tournures types, répétitions, structure du texte). Elle donne une estimation, pas une certitude. Le badge reste discret, réglable et masquable — vous gardez le dernier mot. Une version avec un modèle de classification dédié est en préparation." }
+    },
+    {
+      "@type": "Question",
+      "name": "Comment fonctionne la détection ?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Tout se passe dans votre navigateur : l'extension analyse les textes d'au moins 300 caractères en cherchant des signaux linguistiques (expressions types des textes générés, répétitions de phrases ou de structures, vocabulaire superlatif). Chaque signal fait monter un indice de 0 à 100. Aucun texte n'est envoyé sur Internet." }
+    },
+    {
+      "@type": "Question",
+      "name": "Que se passe-t-il si elle se trompe ?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Un clic sur un badge permet de le masquer, ou de masquer la détection sur tout le site. La sensibilité est réglable (Sensible, Équilibré, Strict) depuis l'icône de l'extension. On peut aussi simplement ignorer les badges." }
+    },
+    {
+      "@type": "Question",
+      "name": "Où vont mes données ?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Nulle part : l'analyse est 100 % locale, les textes consultés ne quittent jamais le navigateur. Les seules données transmises sont celles envoyées volontairement via le formulaire d'accès bêta (nom, email, éventuellement site et question)." }
+    },
+    {
+      "@type": "Question",
+      "name": "Quels navigateurs sont pris en charge ?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Pour la bêta : Chrome, Edge, Brave et Arc, tous basés sur Chromium. L'installation se fait en quelques clics, sans passer par un store. Une version Firefox est prévue." }
+    },
+    {
+      "@type": "Question",
+      "name": "Pourquoi un abonnement payant ?",
+      "acceptedAnswer": { "@type": "Answer", "text": "L'offre gratuite reste gratuite, sans limite de temps. L'abonnement Pro (3 €/mois) finance l'amélioration de la détection et le support. Les bêta-testeurs conservent le tarif annoncé. Sans engagement, résiliable à tout moment." }
+    }
+  ]
+}
+</script>
+
+<style>
+  :root {
+    --sky: #38bdf8;
+    --sky-deep: #0284c7;
+    --sky-soft: #e0f2fe;
+    --mint: #6ee7b7;
+    --mint-deep: #059669;
+    --mint-soft: #d1fae5;
+    --ink: #0f172a;
+    --muted: #475569;
+    --faint: #64748b;
+    --line: #e2e8f0;
+    --bg-soft: #f0f9ff;
+    --bg-mint: #ecfdf5;
+    --amber: #f59e0b;
+    --amber-soft: #fef3c7;
+    --radius: 20px;
+    --shadow: 0 10px 30px rgba(15, 23, 42, .07);
+    --shadow-lg: 0 24px 60px rgba(15, 23, 42, .12);
+    --grad: linear-gradient(135deg, var(--sky), var(--mint));
+    --font-head: 'Sora', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--font-body);
+    color: var(--ink);
+    background: #fff;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection { background: var(--sky); color: #fff; }
+  img { max-width: 100%; display: block; }
+  a { color: var(--sky-deep); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+
+  /* ── Navigation ─────────────────────────────────────────── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(255, 255, 255, .82);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid transparent;
+    transition: border-color .25s;
+  }
+  nav.scrolled { border-bottom-color: var(--line); }
+  nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 66px; }
+  .brand { display: flex; align-items: center; gap: 10px; font-family: var(--font-head); font-weight: 800; font-size: 17px; color: var(--ink); }
+  .brand:hover { text-decoration: none; }
+  .brand-mark {
+    width: 34px; height: 34px; border-radius: 10px;
+    background: var(--grad);
+    display: grid; place-items: center;
+    font-size: 15px; color: var(--ink);
+    box-shadow: 0 4px 12px rgba(56, 189, 248, .35);
+  }
+  .nav-links { display: flex; align-items: center; gap: 26px; font-size: 14px; font-weight: 500; color: var(--muted); }
+  .nav-links a { color: inherit; }
+  .nav-links a:hover { color: var(--sky-deep); text-decoration: none; }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    border-radius: 999px; font-family: var(--font-head); font-weight: 700; font-size: 15px;
+    padding: 12px 26px; cursor: pointer; border: none; transition: transform .18s, box-shadow .18s, background .18s;
+    text-decoration: none;
+  }
+  .btn:hover { transform: translateY(-2px); text-decoration: none; }
+  .btn-grad { background: var(--grad); color: var(--ink); box-shadow: 0 8px 22px rgba(56, 189, 248, .35); }
+  .btn-grad:hover { box-shadow: 0 12px 28px rgba(56, 189, 248, .45); }
+  .btn-ghost { background: #fff; color: var(--ink); border: 1.5px solid var(--line); }
+  .btn-ghost:hover { border-color: var(--sky); }
+  .btn-sm { padding: 9px 18px; font-size: 13.5px; }
+
+  /* ── Héro ───────────────────────────────────────────────── */
+  .hero {
+    position: relative;
+    padding: 96px 0 84px;
+    background:
+      radial-gradient(600px 300px at 12% 0%, rgba(56, 189, 248, .14), transparent 70%),
+      radial-gradient(700px 320px at 88% 12%, rgba(110, 231, 183, .16), transparent 70%),
+      radial-gradient(rgba(15, 23, 42, .05) 1px, transparent 1px);
+    background-size: auto, auto, 26px 26px;
+    overflow: hidden;
+  }
+  .hero-grid { display: grid; grid-template-columns: 1.05fr .95fr; gap: 56px; align-items: center; }
+  .kicker {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--font-mono); font-size: 12px; font-weight: 600; letter-spacing: .04em;
+    color: var(--sky-deep); background: var(--sky-soft);
+    border: 1px solid rgba(56, 189, 248, .35);
+    border-radius: 999px; padding: 6px 14px; margin-bottom: 22px;
+  }
+  .kicker .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--mint-deep); animation: pulse 2.2s infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
+  h1 {
+    font-family: var(--font-head); font-weight: 800;
+    font-size: clamp(2.35rem, 5.6vw, 4.05rem);
+    line-height: 1.08; letter-spacing: -.02em;
+    margin-bottom: 22px;
+  }
+  .grad-text {
+    background: linear-gradient(100deg, var(--sky-deep), var(--mint-deep));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .hero p.lead { font-size: 18px; color: var(--muted); max-width: 560px; margin-bottom: 30px; }
+  .hero-cta { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 34px; }
+  .hero-trust { display: flex; gap: 26px; flex-wrap: wrap; }
+  .trust-item { display: flex; align-items: center; gap: 9px; font-size: 13.5px; font-weight: 600; color: var(--muted); }
+  .trust-item svg { flex: none; }
+  .trust-item b { color: var(--ink); }
+
+  /* Mockup de fil */
+  .mockup {
+    position: relative; background: #fff; border: 1px solid var(--line);
+    border-radius: 24px; box-shadow: var(--shadow-lg); padding: 18px;
+  }
+  .mockup-bar { display: flex; gap: 6px; padding: 2px 4px 14px; border-bottom: 1px solid var(--line); margin-bottom: 14px; }
+  .mockup-bar i { width: 11px; height: 11px; border-radius: 50%; display: block; }
+  .mockup-bar i:nth-child(1) { background: #fca5a5; }
+  .mockup-bar i:nth-child(2) { background: #fcd34d; }
+  .mockup-bar i:nth-child(3) { background: #6ee7b7; }
+  .post { position: relative; padding: 14px; border: 1px solid var(--line); border-radius: 16px; margin-bottom: 12px; background: #fff; }
+  .post:last-child { margin-bottom: 0; }
+  .post-head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .avatar { width: 34px; height: 34px; border-radius: 50%; flex: none; display: grid; place-items: center; font-size: 15px; color: #fff; font-weight: 700; }
+  .post-head .who { font-size: 13px; font-weight: 700; }
+  .post-head .when { font-size: 11.5px; color: var(--faint); }
+  .post-lines span { display: block; height: 9px; border-radius: 5px; background: #e2e8f0; margin-bottom: 7px; }
+  .post-lines span:nth-child(2) { width: 88%; }
+  .post-lines span:nth-child(3) { width: 62%; }
+  .post .l2 { margin-top: 2px; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: var(--font-mono); font-size: 10.5px; font-weight: 600; letter-spacing: .02em;
+    border-radius: 999px; padding: 4px 10px;
+  }
+  .chip-ia { background: var(--sky-soft); border: 1px solid var(--sky); color: var(--sky-deep); }
+  .chip-ia-strong { background: var(--amber-soft); border: 1px solid var(--amber); color: #92400e; }
+  .chip-human { background: var(--mint-soft); border: 1px solid var(--mint); color: var(--mint-deep); }
+  .chip .c-dot { width: 6px; height: 6px; border-radius: 50%; }
+  .chip-ia .c-dot { background: var(--sky); }
+  .chip-ia-strong .c-dot { background: var(--amber); }
+  .chip-human .c-dot { background: var(--mint-deep); }
+  .post .chip { position: absolute; top: 12px; right: 12px; animation: pop .5s .6s cubic-bezier(.2, .9, .3, 1.4) both; }
+  .post:nth-of-type(2) .chip { animation-delay: 1.1s; }
+  .post:nth-of-type(3) .chip { animation-delay: 1.6s; }
+  @keyframes pop { from { opacity: 0; transform: translateY(6px) scale(.9); } to { opacity: 1; transform: none; } }
+  .mockup-float {
+    position: absolute; top: -18px; right: -14px;
+    background: #fff; border: 1px solid var(--line); border-radius: 14px;
+    box-shadow: var(--shadow); padding: 10px 14px;
+    font-size: 12px; font-weight: 600; display: flex; align-items: center; gap: 8px;
+    animation: floaty 5s ease-in-out infinite;
+  }
+  .mockup-float small { display: block; font-weight: 500; color: var(--faint); font-size: 10.5px; }
+  @keyframes floaty { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
+
+  /* ── Sections génériques ────────────────────────────────── */
+  section { padding: 84px 0; }
+  .sec-head { text-align: center; max-width: 680px; margin: 0 auto 52px; }
+  .sec-tag {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-family: var(--font-mono); font-size: 12px; font-weight: 600;
+    color: var(--mint-deep); background: var(--mint-soft);
+    border: 1px solid rgba(110, 231, 183, .45);
+    border-radius: 999px; padding: 5px 13px; margin-bottom: 16px;
+  }
+  h2 { font-family: var(--font-head); font-weight: 800; font-size: clamp(1.7rem, 3.6vw, 2.5rem); line-height: 1.15; letter-spacing: -.015em; }
+  .sec-head p { color: var(--muted); font-size: 16.5px; margin-top: 14px; }
+
+  /* Douleurs */
+  .pains { background: var(--bg-soft); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .pain-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .card {
+    background: #fff; border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 30px 26px; box-shadow: var(--shadow);
+    transition: transform .25s, box-shadow .25s;
+  }
+  .card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
+  .card .ico {
+    width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center;
+    margin-bottom: 18px; font-size: 21px;
+  }
+  .ico-sky { background: var(--sky-soft); }
+  .ico-mint { background: var(--mint-soft); }
+  .ico-amber { background: var(--amber-soft); }
+  .card h3 { font-family: var(--font-head); font-weight: 700; font-size: 17.5px; margin-bottom: 10px; }
+  .card p { color: var(--muted); font-size: 14.5px; }
+
+  /* Étapes */
+  .step-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 34px; }
+  .step { text-align: left; position: relative; }
+  .step-num {
+    font-family: var(--font-head); font-weight: 800; font-size: 56px; line-height: 1;
+    color: transparent; -webkit-text-stroke: 2px var(--sky);
+    margin-bottom: 16px;
+  }
+  .step h3 { font-family: var(--font-head); font-weight: 700; font-size: 18px; margin-bottom: 10px; }
+  .step p { color: var(--muted); font-size: 14.5px; }
+  .step-arrow {
+    position: absolute; top: 44px; left: calc(100% + 2px);
+    font-size: 22px; color: var(--sky); z-index: 2;
+    background: #fff; border-radius: 50%; width: 30px; height: 30px;
+    display: grid; place-items: center;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, .1);
+  }
+  .step-code {
+    font-family: var(--font-mono); font-size: 11.5px; color: var(--sky-deep);
+    background: var(--bg-soft); border: 1px dashed rgba(56, 189, 248, .5);
+    border-radius: 10px; padding: 8px 12px; margin-top: 14px; display: inline-block;
+  }
+
+  /* Démo */
+  .demo { background: var(--bg-mint); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .demo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; align-items: start; }
+  .panel {
+    background: #fff; border: 1px solid var(--line); border-radius: var(--radius);
+    box-shadow: var(--shadow); overflow: hidden;
+  }
+  .panel-head {
+    display: flex; align-items: center; gap: 8px; padding: 14px 18px;
+    border-bottom: 1px solid var(--line); background: #f8fafc;
+    font-family: var(--font-mono); font-size: 12px; font-weight: 600; color: var(--faint);
+  }
+  .panel-head .dot { width: 8px; height: 8px; border-radius: 50%; }
+  .tabs { display: flex; gap: 8px; padding: 14px 18px 0; flex-wrap: wrap; }
+  .tab {
+    font: 600 12.5px var(--font-body); color: var(--muted); background: #f1f5f9;
+    border: 1px solid var(--line); border-radius: 999px; padding: 7px 14px; cursor: pointer;
+    transition: all .18s;
+  }
+  .tab.active { background: var(--sky-soft); border-color: var(--sky); color: var(--sky-deep); }
+  .sample-box { padding: 16px 18px 20px; }
+  .sample-text {
+    font-size: 13.5px; line-height: 1.65; color: #334155;
+    background: #f8fafc; border: 1px solid var(--line); border-radius: 12px;
+    padding: 14px 16px; max-height: 250px; overflow-y: auto; white-space: pre-wrap;
+  }
+  textarea.sample-text { width: 100%; resize: vertical; font-family: var(--font-body); }
+  .demo-actions { display: flex; align-items: center; gap: 12px; padding: 0 18px 18px; flex-wrap: wrap; }
+  .demo-hint { font-size: 12.5px; color: var(--faint); }
+  .result-box { padding: 20px 22px; min-height: 300px; display: flex; flex-direction: column; gap: 16px; }
+  .result-empty { color: var(--faint); font-size: 14px; text-align: center; margin: auto; max-width: 260px; }
+  .ring-wrap { display: flex; align-items: center; gap: 22px; }
+  .ring {
+    position: relative; width: 118px; height: 118px; border-radius: 50%; flex: none;
+    background: conic-gradient(var(--sky) calc(var(--p) * 1%), #e2e8f0 0);
+    display: grid; place-items: center;
+  }
+  .ring::before { content: ''; position: absolute; inset: 11px; background: #fff; border-radius: 50%; }
+  .ring b { position: relative; font-family: var(--font-head); font-size: 26px; font-weight: 800; }
+  .ring small { position: absolute; bottom: 30px; font-size: 9.5px; color: var(--faint); font-weight: 600; }
+  .verdict { font-family: var(--font-head); font-weight: 700; font-size: 16.5px; }
+  .sig-list { list-style: none; display: flex; flex-direction: column; gap: 7px; }
+  .sig-list li {
+    font-size: 12.5px; color: #334155; background: #f8fafc;
+    border: 1px solid var(--line); border-radius: 9px; padding: 7px 11px;
+  }
+  .sig-list li::before { content: '✦ '; color: var(--sky-deep); font-weight: 700; }
+  .demo-note {
+    font-size: 12px; color: var(--faint); background: var(--bg-soft);
+    border: 1px dashed rgba(56, 189, 248, .45); border-radius: 10px; padding: 10px 13px;
+  }
+
+  /* Offres */
+  .plan-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; align-items: stretch; }
+  .plan {
+    position: relative; background: #fff; border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 32px 28px; display: flex; flex-direction: column; box-shadow: var(--shadow);
+    transition: transform .25s, box-shadow .25s;
+  }
+  .plan:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
+  .plan-pro {
+    border: 2px solid transparent;
+    background: linear-gradient(#fff, #fff) padding-box, var(--grad) border-box;
+    box-shadow: 0 18px 44px rgba(56, 189, 248, .22);
+  }
+  .plan-most {
+    position: absolute; top: -15px; left: 50%; transform: translateX(-50%);
+    background: var(--grad); color: var(--ink);
+    font-family: var(--font-head); font-weight: 800; font-size: 11px; letter-spacing: .08em;
+    border-radius: 999px; padding: 6px 16px; white-space: nowrap;
+    box-shadow: 0 6px 16px rgba(56, 189, 248, .4);
+  }
+  .plan h3 { font-family: var(--font-head); font-weight: 700; font-size: 19px; margin-bottom: 4px; }
+  .plan .plan-for { font-size: 13px; color: var(--faint); margin-bottom: 20px; }
+  .plan-price { display: flex; align-items: baseline; gap: 6px; margin-bottom: 20px; }
+  .plan-price b { font-family: var(--font-head); font-weight: 800; font-size: 40px; letter-spacing: -.02em; }
+  .plan-price span { color: var(--faint); font-size: 14px; }
+  .plan ul { list-style: none; margin-bottom: 26px; flex: 1; }
+  .plan li { position: relative; padding-left: 26px; font-size: 14px; color: var(--muted); margin-bottom: 11px; }
+  .plan li::before {
+    content: ''; position: absolute; left: 0; top: 5px;
+    width: 16px; height: 16px; border-radius: 50%;
+    background: var(--mint-soft); border: 1px solid var(--mint);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 8.5l2.5 2.5L12 6' fill='none' stroke='%23059669' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-size: 12px; background-position: center; background-repeat: no-repeat;
+  }
+  .plan .btn { width: 100%; }
+  .btn-outline { background: #fff; border: 1.5px solid var(--line); color: var(--ink); }
+  .btn-outline:hover { border-color: var(--sky); }
+  .pricing-note {
+    text-align: center; color: var(--faint); font-size: 13px;
+    max-width: 640px; margin: 26px auto 0;
+  }
+  .pricing-note b { color: var(--muted); }
+
+  /* Formulaire bêta */
+  .beta { background: var(--bg-soft); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .beta-wrap { max-width: 720px; margin: 0 auto; }
+  .form-card {
+    background: #fff; border: 1px solid var(--line); border-radius: 24px;
+    box-shadow: var(--shadow-lg); padding: 38px;
+  }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .field { display: flex; flex-direction: column; gap: 6px; }
+  .field.full { grid-column: 1 / -1; }
+  .field label { font-size: 13px; font-weight: 600; }
+  .field label small { color: var(--faint); font-weight: 500; }
+  .field input, .field textarea {
+    font: 400 14.5px var(--font-body); color: var(--ink);
+    border: 1.5px solid var(--line); border-radius: 12px; padding: 12px 14px;
+    outline: none; transition: border-color .18s, box-shadow .18s; background: #fff; width: 100%;
+  }
+  .field input:focus, .field textarea:focus {
+    border-color: var(--sky); box-shadow: 0 0 0 4px rgba(56, 189, 248, .15);
+  }
+  .field textarea { resize: vertical; min-height: 96px; }
+  .hp { position: absolute; left: -9999px; opacity: 0; height: 0; overflow: hidden; }
+  .form-error {
+    display: none; background: #fef2f2; border: 1px solid #fecaca; color: #b91c1c;
+    border-radius: 12px; padding: 11px 14px; font-size: 13.5px; margin-top: 16px;
+  }
+  .form-error.show { display: block; }
+  .form-success { display: none; }
+  .form-success.show { display: block; }
+  .success-box {
+    background: var(--mint-soft); border: 1px solid var(--mint); border-radius: 16px;
+    padding: 26px; text-align: center;
+  }
+  .success-box .big { font-size: 40px; margin-bottom: 10px; }
+  .success-box h3 { font-family: var(--font-head); font-weight: 700; font-size: 19px; margin-bottom: 8px; }
+  .success-box p { color: var(--muted); font-size: 14.5px; }
+  .form-actions { margin-top: 20px; }
+  .form-actions .btn { width: 100%; padding: 15px; font-size: 16px; }
+  .form-privacy { text-align: center; font-size: 12.5px; color: var(--faint); margin-top: 14px; }
+  .beta-plan-note {
+    display: none; font-size: 13px; color: var(--sky-deep); background: var(--sky-soft);
+    border: 1px dashed rgba(56, 189, 248, .5); border-radius: 10px; padding: 9px 13px; margin-bottom: 16px;
+  }
+  .beta-plan-note.show { display: block; }
+
+  /* FAQ */
+  .faq-wrap { max-width: 780px; margin: 0 auto; }
+  .faq-item { border-bottom: 1px solid var(--line); }
+  .faq-item:first-child { border-top: 1px solid var(--line); }
+  .faq-q {
+    width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 18px;
+    background: none; border: none; cursor: pointer; text-align: left;
+    font: 600 16px var(--font-head); color: var(--ink); padding: 22px 4px;
+  }
+  .faq-q .plus {
+    flex: none; width: 30px; height: 30px; border-radius: 50%;
+    border: 1.5px solid var(--sky); color: var(--sky-deep);
+    display: grid; place-items: center; font-size: 17px; font-weight: 700;
+    transition: transform .25s, background .25s, color .25s;
+  }
+  .faq-item.open .faq-q .plus { transform: rotate(45deg); background: var(--sky); color: #fff; }
+  .faq-a {
+    display: grid; grid-template-rows: 0fr; transition: grid-template-rows .3s ease;
+  }
+  .faq-item.open .faq-a { grid-template-rows: 1fr; }
+  .faq-a > div { overflow: hidden; }
+  .faq-a p { color: var(--muted); font-size: 14.5px; padding: 0 4px 22px; max-width: 640px; }
+
+  /* Footer */
+  footer { background: #f8fafc; border-top: 1px solid var(--line); padding: 54px 0 34px; }
+  .foot-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 34px; margin-bottom: 34px; }
+  .foot-brand p { color: var(--muted); font-size: 13.5px; margin-top: 12px; max-width: 320px; }
+  .foot-col h4 { font-family: var(--font-head); font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 14px; }
+  .foot-col a, .foot-col span { display: block; color: var(--muted); font-size: 13.5px; margin-bottom: 9px; }
+  .foot-col a:hover { color: var(--sky-deep); }
+  .foot-bottom {
+    border-top: 1px solid var(--line); padding-top: 22px;
+    display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+    font-size: 12.5px; color: var(--faint);
+  }
+  .foot-human { display: inline-flex; align-items: center; gap: 7px; }
+
+  /* Reveal */
+  .reveal { opacity: 0; transform: translateY(22px); transition: opacity .65s ease, transform .65s ease; }
+  .reveal.is-visible { opacity: 1; transform: none; }
+  [data-delay="1"] { transition-delay: .12s; }
+  [data-delay="2"] { transition-delay: .24s; }
+  [data-delay="3"] { transition-delay: .36s; }
+
+  @media (max-width: 960px) {
+    .hero-grid, .demo-grid { grid-template-columns: 1fr; gap: 40px; }
+    .pain-grid, .step-grid, .plan-grid { grid-template-columns: 1fr; }
+    .step-arrow { display: none; }
+    .foot-grid { grid-template-columns: 1fr; gap: 24px; }
+    .mockup { max-width: 560px; }
+    .hero { padding: 64px 0 56px; }
+    section { padding: 64px 0; }
+  }
+  @media (max-width: 640px) {
+    .nav-links { display: none; }
+    .form-grid { grid-template-columns: 1fr; }
+    .form-card { padding: 26px 20px; }
+    .hero-cta .btn { width: 100%; }
+    .mockup-float { display: none; }
+    .ring-wrap { flex-direction: column; align-items: flex-start; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .reveal { opacity: 1; transform: none; transition: none; }
+    * { animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════ NAVIGATION ══════════ -->
+<nav id="nav">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Human Only — retour en haut">
+      <span class="brand-mark">✦</span> Human&nbsp;Only
+    </a>
+    <div class="nav-links">
+      <a href="#probleme">Le problème</a>
+      <a href="#comment">Comment ça marche</a>
+      <a href="#offres">Offres</a>
+      <a href="#faq">FAQ</a>
+      <a class="btn btn-grad btn-sm" href="#beta">Accès bêta</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ══════════ HÉRO ══════════ -->
+<header class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="kicker reveal"><span class="dot"></span> Extension navigateur · détection 100&nbsp;% locale</span>
+      <h1 class="reveal" data-delay="1">Reprenez le contrôle de <span class="grad-text">votre fil.</span></h1>
+      <p class="lead reveal" data-delay="2">Human Only signale discrètement le contenu probablement généré par IA, pendant que vous naviguez. Un badge, un indice, et vous décidez quoi lire — en connaissance de cause.</p>
+      <div class="hero-cta reveal" data-delay="3">
+        <a class="btn btn-grad" href="#beta">Demander l’accès bêta</a>
+        <a class="btn btn-ghost" href="#comment">Voir comment ça marche</a>
+      </div>
+      <div class="hero-trust reveal" data-delay="3">
+        <span class="trust-item">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M12 2l2.4 7.2H22l-6 4.6 2.3 7.2-6.3-4.5-6.3 4.5L8 13.8 2 9.2h7.6z" fill="#6ee7b7"/></svg>
+          <span><b>0 donnée envoyée</b> — tout est local</span>
+        </span>
+        <span class="trust-item">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#38bdf8" stroke-width="2.2"/><path d="M8.5 12.2l2.4 2.4 4.6-5" stroke="#38bdf8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span><b><span id="signal-count">46</span> signaux</b> linguistiques analysés</span>
+        </span>
+        <span class="trust-item">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M12 3l7 3v5c0 4.4-3 8.4-7 10-4-1.6-7-5.6-7-10V6z" stroke="#6ee7b7" stroke-width="2.2" stroke-linejoin="round"/></svg>
+          <span><b>Badge discret</b> — vous gardez le dernier mot</span>
+        </span>
+      </div>
+    </div>
+
+    <div class="mockup reveal" data-delay="2" aria-hidden="true">
+      <div class="mockup-bar"><i></i><i></i><i></i></div>
+      <div class="post">
+        <span class="chip chip-ia-strong"><span class="c-dot"></span>✦ IA probable · indice élevé</span>
+        <div class="post-head">
+          <span class="avatar" style="background:linear-gradient(135deg,#38bdf8,#0284c7)">A</span>
+          <div><div class="who">Atelier Conso</div><div class="when">il y a 2 h · 3 min de lecture</div></div>
+        </div>
+        <div class="post-lines"><span style="width:96%"></span><span></span><span></span><span class="l2" style="width:74%"></span></div>
+      </div>
+      <div class="post">
+        <span class="chip chip-ia"><span class="c-dot"></span>✦ IA probable · indice modéré</span>
+        <div class="post-head">
+          <span class="avatar" style="background:linear-gradient(135deg,#6ee7b7,#059669)">L</span>
+          <div><div class="who">Le Fil Éco</div><div class="when">il y a 5 h · 4 min de lecture</div></div>
+        </div>
+        <div class="post-lines"><span style="width:92%"></span><span></span><span style="width:70%"></span></div>
+      </div>
+      <div class="post">
+        <span class="chip chip-human"><span class="c-dot"></span>✓ Aucun signal IA détecté</span>
+        <div class="post-head">
+          <span class="avatar" style="background:linear-gradient(135deg,#f59e0b,#d97706)">M</span>
+          <div><div class="who">Margaux D. — journaliste</div><div class="when">il y a 8 h · reportage terrain</div></div>
+        </div>
+        <div class="post-lines"><span style="width:94%"></span><span></span><span></span><span class="l2" style="width:56%"></span></div>
+      </div>
+      <div class="mockup-float">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#059669" stroke-width="2.2"/><path d="M8.5 12.2l2.4 2.4 4.6-5" stroke="#059669" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div>3 textes analysés<small>2 probablement générés par IA</small></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ══════════ 3 DOULEURS ══════════ -->
+<section class="pains" id="probleme">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-tag">Le constat</span>
+      <h2>Pourquoi votre fil vous épuise</h2>
+      <p>Le contenu généré par IA n’est pas le problème en soi. Le problème, c’est ce qu’il fait à votre attention, jour après jour.</p>
+    </div>
+    <div class="pain-grid">
+      <article class="card reveal" data-delay="1">
+        <div class="ico ico-sky">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="8" height="8" rx="2" stroke="#0284c7" stroke-width="2"/><rect x="13" y="3" width="8" height="8" rx="2" stroke="#0284c7" stroke-width="2" opacity=".45"/><rect x="3" y="13" width="8" height="8" rx="2" stroke="#0284c7" stroke-width="2" opacity=".45"/><rect x="13" y="13" width="8" height="8" rx="2" stroke="#0284c7" stroke-width="2"/></svg>
+        </div>
+        <h3>La fatigue de curation</h3>
+        <p>Des centaines de textes au même format lisse envahissent vos fils. Trier le bon grain de l’ivraie est devenu un travail à temps plein — et vous n’êtes pas payé pour ça.</p>
+      </article>
+      <article class="card reveal" data-delay="2">
+        <div class="ico ico-mint">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 3l7 3v5c0 4.4-3 8.4-7 10-4-1.6-7-5.6-7-10V6z" stroke="#059669" stroke-width="2" stroke-linejoin="round"/><path d="M8.8 11.8l2.2 2.2 4.2-4.6" stroke="#059669" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h3>La confiance érodée</h3>
+        <p>Quand tout ressemble à tout, le doute s’installe : qui écrit vraiment derrière cet article ? Vous lisez, mais vous ne croyez plus. L’information perd sa valeur.</p>
+      </article>
+      <article class="card reveal" data-delay="3">
+        <div class="ico ico-amber">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="13" r="7.5" stroke="#d97706" stroke-width="2"/><path d="M12 9.5V13l2.5 1.5" stroke="#d97706" stroke-width="2" stroke-linecap="round"/><path d="M9 2.5h6" stroke="#d97706" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
+        <h3>Le temps perdu</h3>
+        <p>Vous lisez quatre cents mots pour deux idées. Le remplissage généré par IA vole votre attention — la seule ressource que vous ne pouvez pas produire davantage.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ 3 ÉTAPES ══════════ -->
+<section id="comment">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-tag">Comment ça marche</span>
+      <h2>Trois étapes. Zéro configuration.</h2>
+      <p>Installez le dossier, laissez l’extension travailler dans votre navigateur, et retrouvez votre liberté de lecture.</p>
+    </div>
+    <div class="step-grid">
+      <div class="step reveal" data-delay="1">
+        <div class="step-num">01</div>
+        <h3>Installer</h3>
+        <p>Téléchargez le dossier de l’extension et chargez-le en quelques clics. Aucun compte, aucun store, aucun droit excessif.</p>
+        <code class="step-code">chrome://extensions → mode développeur → « Charger l’extension non empaquetée »</code>
+        <span class="step-arrow" aria-hidden="true">→</span>
+      </div>
+      <div class="step reveal" data-delay="2">
+        <div class="step-num">02</div>
+        <h3>Détecter</h3>
+        <p>L’extension analyse chaque texte d’au moins 300 caractères, directement dans votre navigateur, et pose un badge discret sur les blocs probablement générés par IA.</p>
+        <span class="step-arrow" aria-hidden="true">→</span>
+      </div>
+      <div class="step reveal" data-delay="3">
+        <div class="step-num">03</div>
+        <h3>Décider</h3>
+        <p>Vous lisez en connaissance de cause : approfondir, survoler ou passer. Le badge s’efface d’un clic — sur un contenu comme sur tout un site.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ DÉMO RÉELLE ══════════ -->
+<section class="demo" id="demo">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-tag">La preuve en direct</span>
+      <h2>La détection, sous vos yeux</h2>
+      <p>Ceci n’est pas une illustration : c’est le code exact de l’extension qui tourne ici, dans votre navigateur.</p>
+    </div>
+    <div class="demo-grid">
+      <div class="panel reveal" data-delay="1">
+        <div class="panel-head"><span class="dot" style="background:var(--sky)"></span> Texte à analyser</div>
+        <div class="tabs" role="tablist">
+          <button class="tab active" data-sample="ai" role="tab" aria-selected="true">Exemple « IA »</button>
+          <button class="tab" data-sample="human" role="tab" aria-selected="false">Exemple « humain »</button>
+          <button class="tab" data-sample="custom" role="tab" aria-selected="false">Votre texte</button>
+        </div>
+        <div class="sample-box">
+          <div class="sample-text" id="sample-ai">Dans le monde numérique d’aujourd’hui, il est important de noter que la productivité est essentielle. Voici quelques points clés à retenir : d’abord, il est crucial d’organiser son temps. Ensuite, il convient de noter que la concentration est primordiale pour avancer efficacement. Enfin, n’oubliez pas de prendre des pauses régulières et de rester hydraté tout au long de la journée.
+
+En résumé, une bonne gestion du temps repose sur la discipline, la constance et la régularité. Il est essentiel de garder à l’esprit que chaque action compte, même la plus petite. N’hésitez pas à appliquer ces conseils dès aujourd’hui pour transformer votre quotidien.
+
+En conclusion, la maîtrise de votre emploi du temps est le premier pas vers une vie plus sereine, plus productive et plus épanouissante. Prenez soin de vous et de votre organisation, et les résultats suivront naturellement.</div>
+          <div class="sample-text" id="sample-human" style="display:none">Hier soir, mon collègue et moi on a passé deux heures sur notre tableau de bord, et franchement, je me suis dit qu’il fallait que je partage ça. On a enfin trouvé pourquoi nos emails partaient en spam : un simple en-tête mal configuré, et hop, tout partait en courrier indésirable.
+
+Je me souviens qu’on avait galéré une semaine là-dessus l’année dernière, avec le prestataire qui nous renvoyait vers la doc. Bref, j’ai noté les trois étapes dans un gist, je vous mets le lien en commentaire. Ça nous a pris deux heures de tests, mais la solution tient en dix lignes.
+
+Si ça peut vous éviter la même galère, tant mieux. Et si vous avez une astuce pour les webhooks, je suis preneur, on a un souci avec les relances automatiques.</div>
+          <textarea class="sample-text" id="sample-custom" style="display:none" rows="8" placeholder="Collez ici n’importe quel texte (au moins 300 caractères) — l’analyse se fait dans votre navigateur, rien n’est envoyé."></textarea>
+        </div>
+        <div class="demo-actions">
+          <button class="btn btn-grad btn-sm" id="demo-run">✦ Lancer la détection</button>
+          <span class="demo-hint">Le même moteur que l’extension : <span id="demo-signal-count">46</span> signaux, 100&nbsp;% local.</span>
+        </div>
+      </div>
+      <div class="panel reveal" data-delay="2">
+        <div class="panel-head"><span class="dot" style="background:var(--mint)"></span> Résultat de l’analyse</div>
+        <div class="result-box" id="result-box">
+          <div class="result-empty">Cliquez sur « Lancer la détection » pour voir l’indice heuristique, le niveau de confiance et les signaux détectés.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ 3 OFFRES ══════════ -->
+<section id="offres">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-tag">Les offres</span>
+      <h2>Simples, honnêtes, sans piège</h2>
+      <p>Le gratuit reste gratuit. Le payant finance la détection de demain. Aucun engagement, résiliable en un message.</p>
+    </div>
+    <div class="plan-grid">
+      <article class="plan reveal" data-delay="1">
+        <h3>Gratuit</h3>
+        <div class="plan-for">Pour reprendre la main, tout de suite</div>
+        <div class="plan-price"><b>0 €</b><span>/ mois, pour toujours</span></div>
+        <ul>
+          <li>Badge de détection de base</li>
+          <li>Navigation sans pub ni tracking ajouté</li>
+          <li>Mises à jour des heuristiques incluses</li>
+          <li>100&nbsp;% local — aucun compte requis</li>
+        </ul>
+        <a class="btn btn-outline" href="#beta">Demander l’accès bêta</a>
+      </article>
+
+      <article class="plan plan-pro reveal" data-delay="2">
+        <span class="plan-most">LE PLUS CHOISI</span>
+        <h3>Pro</h3>
+        <div class="plan-for">Pour ceux qui veulent aller plus loin</div>
+        <div class="plan-price"><b>3 €</b><span>/ mois, sans engagement</span></div>
+        <ul>
+          <li>Tout le plan Gratuit</li>
+          <li>Badge avancé : indice détaillé et signaux visibles</li>
+          <li>Seuil de sensibilité réglable (Sensible, Équilibré, Strict)</li>
+          <li>Rapport hebdomadaire de votre fil (100&nbsp;% local)</li>
+          <li>Support prioritaire par email</li>
+          <li>Les bêta-testeurs gardent ce tarif</li>
+        </ul>
+        <a class="btn btn-grad" href="#beta" data-plan="Pro">Choisir Pro</a>
+      </article>
+
+      <article class="plan reveal" data-delay="3">
+        <h3>Business</h3>
+        <div class="plan-for">Pour les équipes et les médias</div>
+        <div class="plan-price"><b>9 €</b><span>/ mois, par équipe</span></div>
+        <ul>
+          <li>Tout le plan Pro</li>
+          <li>Seuils de détection gérés pour toute l’équipe</li>
+          <li>Rapports agrégés pour vos rédactions</li>
+          <li>Facture fournisseur</li>
+          <li>Politique de confidentialité dédiée</li>
+        </ul>
+        <a class="btn btn-outline" href="#beta" data-plan="Business">Contacter l’équipe</a>
+      </article>
+    </div>
+    <p class="pricing-note reveal"><b>Paiement par virement ou message privé — confirmation par email.</b> Sans engagement, résiliable à tout moment. Pendant la bêta, le prix peut évoluer à la sortie : les bêta-testeurs conservent le tarif annoncé.</p>
+  </div>
+</section>
+
+<!-- ══════════ FORMULAIRE BÊTA ══════════ -->
+<section class="beta" id="beta">
+  <div class="wrap beta-wrap">
+    <div class="sec-head reveal">
+      <span class="sec-tag">Accès bêta</span>
+      <h2>Essayez Human Only avant tout le monde</h2>
+      <p>L’extension est en cours de finition. Laissez vos coordonnées : vous recevrez le dossier d’installation et un accès prioritaire.</p>
+    </div>
+    <div class="form-card reveal" data-delay="1">
+      <div class="beta-plan-note" id="plan-note"></div>
+      <form id="beta-form" novalidate>
+        <div class="form-grid">
+          <div class="field">
+            <label for="f-name">Votre nom <small>(obligatoire)</small></label>
+            <input type="text" id="f-name" name="name" autocomplete="name" placeholder="Marie Dupont" required>
+          </div>
+          <div class="field">
+            <label for="f-email">Votre email <small>(obligatoire)</small></label>
+            <input type="email" id="f-email" name="email" autocomplete="email" placeholder="marie@exemple.fr" required>
+          </div>
+          <div class="field full">
+            <label for="f-site">Votre site web <small>(optionnel — pour un média ou une entreprise)</small></label>
+            <input type="text" id="f-site" name="site" placeholder="https://…">
+          </div>
+          <div class="field full">
+            <label for="f-question">Votre question ou votre idée <small>(optionnel)</small></label>
+            <textarea id="f-question" name="question" placeholder="Ex. : « Je suis curieux de tester sur mon blog, qui reçoit beaucoup de contenus IA… »"></textarea>
+          </div>
+        </div>
+        <!-- Honeypot anti-spam : champ invisible, ne doit jamais être rempli -->
+        <input type="text" class="hp" id="f-trap" name="trap" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <div class="form-error" id="form-error" role="alert"></div>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-grad" id="beta-submit">Demander l’accès bêta ✦</button>
+        </div>
+        <p class="form-privacy">🔒 Vos informations servent uniquement à vous répondre. Jamais de spam, jamais de revente. Réponse personnelle sous 48&nbsp;h ouvrées.</p>
+      </form>
+
+      <div class="form-success" id="form-success">
+        <div class="success-box">
+          <div class="big">✓</div>
+          <h3>Demande envoyée !</h3>
+          <p>Merci, votre demande d’accès bêta est bien arrivée. Vous recevrez une réponse personnelle sous 48&nbsp;h ouvrées, avec le dossier d’installation et vos identifiants d’accès.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ FAQ ══════════ -->
+<section id="faq">
+  <div class="wrap faq-wrap">
+    <div class="sec-head reveal">
+      <span class="sec-tag">FAQ</span>
+      <h2>Les questions qu’on nous pose</h2>
+    </div>
+    <div class="reveal" data-delay="1">
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">L’extension est-elle fiable à 100&nbsp;% ?<span class="plus">+</span></button>
+        <div class="faq-a"><div><p>Non, et c’est important de le dire : Human Only repose sur une détection heuristique — tournures types, répétitions, structure du texte. Elle produit une estimation, pas une certitude. Une personne peut écrire comme une IA, et une IA peut imiter parfaitement un humain. C’est pour cela que le badge reste discret, réglable et masquable : vous gardez toujours le dernier mot. Une version avec un modèle de classification dédié est en préparation.</p></div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">Comment fonctionne la détection ?<span class="plus">+</span></button>
+        <div class="faq-a"><div><p>Tout se passe dans votre navigateur : l’extension analyse les textes d’au moins 300 caractères en cherchant des signaux linguistiques — expressions types des textes générés (« il est important de noter », « en conclusion »…), répétitions de phrases ou de structures, vocabulaire superlatif, énumérations homogènes. Chaque signal fait monter un indice de 0 à 100. Rien n’est envoyé sur Internet.</p></div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">Que se passe-t-il si elle se trompe ?<span class="plus">+</span></button>
+        <div class="faq-a"><div><p>Un clic sur un badge permet de le masquer, ou de masquer la détection sur tout le site. La sensibilité est réglable (Sensible, Équilibré, Strict) depuis l’icône de l’extension. Et rien ne vous oblige à regarder les badges : vous pouvez simplement les ignorer.</p></div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">Où vont mes données ?<span class="plus">+</span></button>
+        <div class="faq-a"><div><p>Nulle part. L’analyse est 100&nbsp;% locale : les textes que vous consultez ne quittent jamais votre navigateur. Les seules données transmises sont celles que vous envoyez volontairement via le formulaire d’accès bêta — nom, email, éventuellement votre site et votre question — uniquement pour vous répondre.</p></div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">Quels navigateurs sont pris en charge ?<span class="plus">+</span></button>
+        <div class="faq-a"><div><p>Pour la bêta : Chrome, Edge, Brave et Arc — tous basés sur Chromium. L’extension s’installe en quelques clics, sans passer par un store. Une version Firefox est prévue, sans date annoncée.</p></div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">Pourquoi un abonnement payant ?<span class="plus">+</span></button>
+        <div class="faq-a"><div><p>L’offre gratuite reste gratuite, sans limite de temps. L’abonnement Pro (3&nbsp;€/mois) finance l’amélioration de la détection — nouveaux signaux, futur modèle de classification — et un support humain. Les bêta-testeurs qui s’abonnent conservent le tarif annoncé. Sans engagement : vous résiliez à tout moment, en un message.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a class="brand" href="#top"><span class="brand-mark">✦</span> Human&nbsp;Only</a>
+        <p>L’extension qui remet une information simple entre vos mains : « ceci est probablement généré par IA ». Détection 100&nbsp;% locale, badge discret, décision humaine.</p>
+        <p class="foot-human"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#059669" stroke-width="2.2"/><path d="M8.5 12.2l2.4 2.4 4.6-5" stroke="#059669" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg> Ce site a été conçu et rédigé par un humain — pour rester fidèle à la promesse.</p>
+      </div>
+      <div class="foot-col">
+        <h4>Navigation</h4>
+        <a href="#probleme">Le problème</a>
+        <a href="#comment">Comment ça marche</a>
+        <a href="#demo">La démo</a>
+        <a href="#offres">Les offres</a>
+        <a href="#faq">FAQ</a>
+      </div>
+      <div class="foot-col">
+        <h4>Contact</h4>
+        <a href="mailto:bonjour@human-only.fr">bonjour@human-only.fr</a>
+        <span>Réponse sous 48&nbsp;h ouvrées</span>
+        <span>Human Only — bêta 0.1.0</span>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Human Only. Tous droits réservés.</span>
+      <span>Extension indépendante, non affiliée aux plateformes citées. Les marques mentionnées appartiennent à leurs propriétaires.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ══════════ SCRIPTS ══════════ -->
+<script src="extension/analyzer-core.js"></script>
+<script src="chatbot-config.js"></script>
+<script src="chatbot.js"></script>
+
+<script>
+(function () {
+  'use strict';
+
+  var EMAILJS = {
+    serviceId: 'service_cy1ytdb',
+    templateId: 'template_xpo58cv',
+    publicKey: '8Pui4ZEqxW2jRVF7h'
+  };
+
+  /* ── Navigation : ombre au scroll ── */
+  var nav = document.getElementById('nav');
+  function onScroll() { nav.classList.toggle('scrolled', window.scrollY > 8); }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  /* ── Reveal au scroll (désactivé si prefers-reduced-motion) ── */
+  var els = document.querySelectorAll('.reveal');
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    els.forEach(function (el) { el.classList.add('is-visible'); });
+  } else if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12 });
+    els.forEach(function (el) { io.observe(el); });
+  } else {
+    els.forEach(function (el) { el.classList.add('is-visible'); });
+  }
+
+  /* ── Compteur de signaux (réel, depuis analyzer-core.js) ── */
+  var analyzer = window.HumanOnlyAnalyzer;
+  if (analyzer && analyzer.signalCount) {
+    var n = analyzer.signalCount;
+    document.getElementById('signal-count').textContent = n;
+    document.getElementById('demo-signal-count').textContent = n;
+  }
+
+  /* ── FAQ accordéon ── */
+  document.querySelectorAll('.faq-item').forEach(function (item) {
+    var q = item.querySelector('.faq-q');
+    q.addEventListener('click', function () {
+      var open = item.classList.toggle('open');
+      q.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  });
+
+  /* ── Démo : onglets ── */
+  var tabs = document.querySelectorAll('.tab');
+  var samples = { ai: 'sample-ai', human: 'sample-human', custom: 'sample-custom' };
+  var activeSample = 'ai';
+  tabs.forEach(function (tab) {
+    tab.addEventListener('click', function () {
+      tabs.forEach(function (t) { t.classList.remove('active'); t.setAttribute('aria-selected', 'false'); });
+      tab.classList.add('active');
+      tab.setAttribute('aria-selected', 'true');
+      activeSample = tab.dataset.sample;
+      Object.keys(samples).forEach(function (k) {
+        document.getElementById(samples[k]).style.display = (k === activeSample) ? '' : 'none';
+      });
+      if (activeSample === 'custom') document.getElementById('sample-custom').focus();
+    });
+  });
+
+  function currentSampleText() {
+    if (activeSample === 'custom') return document.getElementById('sample-custom').value;
+    return document.getElementById(samples[activeSample]).textContent;
+  }
+
+  /* ── Démo : lancement de la détection (code réel de l'extension) ── */
+  var resultBox = document.getElementById('result-box');
+  document.getElementById('demo-run').addEventListener('click', function () {
+    if (!analyzer) {
+      resultBox.innerHTML = '<div class="result-empty">Le moteur de détection n’a pas pu être chargé. Rechargez la page.</div>';
+      return;
+    }
+    var text = currentSampleText();
+    var res = analyzer.analyze(text);
+    var levelFr = { humain: 'Humain', faible: 'Faible', modere: 'Modéré', eleve: 'Élevé' };
+    var color = { humain: '#6ee7b7', faible: '#6ee7b7', modere: '#38bdf8', eleve: '#f59e0b' };
+    var sigs = (res.signals || []).map(function (s) { return '<li>' + s.label + '</li>'; }).join('');
+    var isShort = res.stats.chars < 300;
+    resultBox.innerHTML =
+      '<div class="ring-wrap">' +
+        '<div class="ring" style="--p:' + (isShort ? 0 : res.score) + '">' +
+          '<b>' + (isShort ? '—' : res.score) + '</b><small>indice /100</small>' +
+        '</div>' +
+        '<div>' +
+          '<div class="verdict" style="color:' + color[res.level] + '">' + (isShort ? 'Texte trop court' : levelFr[res.level] + (res.level === 'humain' ? ' — aucun signal IA' : ' — signal IA probable')) + '</div>' +
+          '<p style="font-size:13px;color:var(--faint);margin-top:6px">' + (isShort ? 'L’analyse exige au moins 300 caractères pour être honnête.' : res.label + '. ' + res.stats.chars + ' caractères analysés.') + '</p>' +
+        '</div>' +
+      '</div>' +
+      (sigs ? '<ul class="sig-list"><li style="font-weight:700;background:none;border:none;padding:0;color:var(--ink)">Signaux détectés</li>' + sigs + '</ul>' : '') +
+      '<div class="demo-note">C’est le code exact de l’extension, <b>' + analyzer.signalCount + ' signaux</b>, exécuté ici même dans votre navigateur. Aucun texte n’a quitté votre machine. L’indice est une estimation heuristique — pas une probabilité, pas une certitude.</div>';
+  });
+
+  /* ── Offres → pré-sélection du plan dans le formulaire ── */
+  var planNote = document.getElementById('plan-note');
+  document.querySelectorAll('[data-plan]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      planNote.textContent = 'Offre choisie : ' + btn.dataset.plan + ' — nous reviendrons vers vous avec les modalités.';
+      planNote.classList.add('show');
+    });
+  });
+
+  /* ── EmailJS : chargement du SDK à la demande (pattern validé) ── */
+  function chargerEmailJS() {
+    return new Promise(function (resolve, reject) {
+      if (window.emailjs) { try { window.emailjs.init({ publicKey: EMAILJS.publicKey }); } catch (e) {} resolve(window.emailjs); return; }
+      var s = document.createElement('script');
+      s.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
+      s.onload = function () {
+        try { window.emailjs.init({ publicKey: EMAILJS.publicKey }); } catch (e) {}
+        resolve(window.emailjs);
+      };
+      s.onerror = function () { reject(new Error('Impossible de charger le service d’envoi.')); };
+      document.head.appendChild(s);
+    });
+  }
+
+  /* ── Formulaire bêta ── */
+  var form = document.getElementById('beta-form');
+  var errorBox = document.getElementById('form-error');
+  var submitBtn = document.getElementById('beta-submit');
+  var successBox = document.getElementById('form-success');
+
+  function showError(msg) { errorBox.textContent = msg; errorBox.classList.add('show'); }
+  function hideError() { errorBox.classList.remove('show'); }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    hideError();
+
+    var name = document.getElementById('f-name').value.trim();
+    var email = document.getElementById('f-email').value.trim();
+    var site = document.getElementById('f-site').value.trim();
+    var question = document.getElementById('f-question').value.trim();
+    var trap = document.getElementById('f-trap').value.trim();
+
+    if (trap) { showError('Votre message semble automatique. Si c’est une erreur, rechargez la page.'); return; }
+    if (name.length < 2) { showError('Merci d’indiquer votre nom (au moins 2 caractères).'); return; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { showError('Merci d’indiquer une adresse email valide.'); return; }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Envoi en cours…';
+
+    chargerEmailJS()
+      .then(function (lib) {
+        return lib.send(EMAILJS.serviceId, EMAILJS.templateId, {
+          site: site || '—',
+          name: name,
+          email: email,
+          question: question || 'Demande d’accès bêta Human Only'
+        });
+      })
+      .then(function () {
+        form.style.display = 'none';
+        successBox.classList.add('show');
+        successBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      })
+      .catch(function () {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Demander l’accès bêta ✦';
+        showError('L’envoi a échoué. Vérifiez votre connexion puis réessayez — ou écrivez-nous directement à bonjour@human-only.fr.');
+      });
+  });
+})();
+</script>
+</body>
+</html>
