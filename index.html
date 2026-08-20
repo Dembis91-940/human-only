@@ -624,9 +624,20 @@ a{transition:color .3s ease}
 .f3-reveal.f3-in{opacity:1;transform:translateY(0)}
 #f3-progress{position:fixed;top:0;left:0;height:3px;z-index:9999;background:linear-gradient(90deg,#5EEAD4,#7DD3FC,#FF8A65);width:0;box-shadow:0 0 12px rgba(94,234,212,.35);border-radius:0 3px 3px 0}
 .panel-head,.tab,.sample-text,.step-arrow,.sig-list li,.mockup-float{background:rgba(255,255,255,.05) !important;border:1px solid rgba(150,240,220,.12) !important}
+/* Correctifs contraste AA (audit 2026-08-20) */
+.sample-text{color:#E9FBF5 !important}
+.step-code{color:#7DD3FC !important}
+.tab{color:#A8C9BD !important}
+.tab.active{background:rgba(125,211,252,.18) !important;color:#E9FBF5 !important;border-color:#7DD3FC !important}
 .post-lines span{background:rgba(255,255,255,.14) !important}
 .plan-pro{background:linear-gradient(rgba(9,44,38,.85),rgba(9,44,38,.85)) padding-box,var(--grad) border-box !important}
 footer{background:#031B18 !important}
+/* Chips statut IA : couleurs deep sur fonds sombres (1.66-4.34) → versions claires */
+.chip-ia{color:#7DD3FC !important}
+.chip-ia-strong{color:#FCD34D !important}
+.chip-human{color:#5EEAD4 !important}
+/* FAQ « + » : sky-deep sur sombre = 3.89 → sky-bright */
+.faq-q .plus{color:#7DD3FC !important}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 
 </style></head>
