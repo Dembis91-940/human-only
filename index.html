@@ -509,7 +509,127 @@
     * { animation: none !important; transition: none !important; }
   }
 </style>
-</head>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,500..700;1,6..72,500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style id="futur-v3">
+/* ============================================================
+   FUTUR V3 — HUMANIST HOLOGRAM — human-only
+   2026-08-20
+   Overlay design : palette futuriste, glassmorphism, animations.
+   La structure HTML, les outils, EmailJS, chatbots et prix sont
+   intégralement préservés (ce bloc ne fait que styler).
+   ============================================================ */
+:root{
+  --ink: #E9FBF5;
+  --muted: #A8C9BD;
+  --faint: #7FA89A;
+  --line: rgba(255,255,255,.1);
+  --bg-mint: #03211D;
+  --bg-soft: #052A24;
+  --mint: #5EEAD4;
+  --mint-deep: #14B8A6;
+  --mint-soft: rgba(94,234,212,.14);
+  --sky: #7DD3FC;
+  --sky-deep: #0284C7;
+  --sky-soft: rgba(125,211,252,.14);
+  --amber: #FFB020;
+  --amber-soft: rgba(255,176,32,.14);
+  --p: #E9FBF5;
+  --radius: 18px;
+  --font-head: 'Newsreader',serif;
+  --font-body: 'Instrument Sans',sans-serif;
+  --font-mono: ui-monospace,SFMono-Regular,Menlo,monospace;
+  --shadow: 0 20px 60px rgba(0,0,0,.45);
+  --shadow-lg: 0 30px 80px rgba(0,0,0,.55);
+  --grad: linear-gradient(135deg,#5EEAD4,#7DD3FC);
+}
+html{scroll-behavior:smooth}
+body{
+  background-color:#03211D !important;
+  background-image:radial-gradient(rgba(255,255,255,.04) 1px,transparent 1px) !important;
+  background-size:34px 34px !important;
+  color:#E9FBF5 !important;
+  font-family:'Instrument Sans',sans-serif !important;
+}
+h1,h2,h3,h4,h5,h6{
+  font-family:'Newsreader',serif !important;
+  letter-spacing:-.015em;
+  color:#E9FBF5 !important;
+}
+p,li,td,label{color:#A8C9BD}
+a{transition:color .3s ease}
+::selection{background:#5EEAD440;color:#E9FBF5}
+::-webkit-scrollbar{width:10px}
+::-webkit-scrollbar-track{background:#03211D}
+::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#5EEAD4,#FF8A65);border-radius:8px;border:2px solid #03211D}
+
+@keyframes f3float{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(4vmax,-3vmax) scale(1.07)}66%{transform:translate(-3vmax,3vmax) scale(.96)}}
+@keyframes f3shimmer{0%{background-position:0% 50%}100%{background-position:200% 50%}}
+@keyframes f3pulse{0%,100%{box-shadow:0 0 0 0 rgba(94,234,212,.35)}50%{box-shadow:0 0 0 14px transparent}}
+@keyframes f3gradmove{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+@keyframes f3floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+
+.grad-text,.kicker,.sec-tag{
+  background:linear-gradient(90deg,#5EEAD4,#7DD3FC,#FF8A65);
+  background-size:200% auto;
+  -webkit-background-clip:text;background-clip:text;
+  color:transparent !important;
+  animation:f3shimmer 7s linear infinite;
+}
+.card,.form-card,.panel,.faq-wrap,.plan,.mockup,.sample-box,.result-box,.post,.step,.beta-wrap,.trust-item{
+  background:rgba(7,44,38,.55) !important;
+  backdrop-filter:blur(16px) saturate(140%);
+  -webkit-backdrop-filter:blur(16px) saturate(140%);
+  border:1px solid rgba(150,240,220,.14) !important;
+  border-radius:18px;
+  box-shadow:0 8px 32px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.06);
+  transition:transform .35s ease, box-shadow .35s ease, border-color .35s ease;
+}
+.card,.form-card,.panel,.faq-wrap,.plan,.mockup,.sample-box,.result-box,.post,.step,.beta-wrap,.trust-item:hover{
+  transform:translateY(-4px);
+  border-color:#5EEAD466 !important;
+  box-shadow:0 12px 42px rgba(94,234,212,.35);
+}
+.nav,nav,header{
+  background:rgba(7,44,38,.55) !important;
+  backdrop-filter:blur(18px) saturate(150%);
+  -webkit-backdrop-filter:blur(18px) saturate(150%);
+  border-bottom:1px solid rgba(150,240,220,.14);
+}
+.hero{
+  background:
+    radial-gradient(900px 420px at 12% -10%, rgba(94,234,212,.12), transparent 60%), radial-gradient(760px 460px at 88% 12%, rgba(125,211,252,.12), transparent 62%), linear-gradient(165deg,#07312A 0%,#03211D 60%,#052822 100%) !important;
+}
+.btn{letter-spacing:.02em;font-weight:600;transition:all .3s ease;border-radius:12px}
+.btn:hover{transform:translateY(-2px)}
+.btn-grad{
+  background:linear-gradient(135deg,#5EEAD4,#7DD3FC,#FF8A65) !important;
+  background-size:200% 200%;
+  animation:f3gradmove 6s ease infinite;
+  box-shadow:0 6px 24px rgba(94,234,212,.35);
+  border:none !important;
+  color:#03211D !important;
+}
+.btn-grad:hover{box-shadow:0 10px 36px rgba(94,234,212,.35);transform:translateY(-3px)}
+.btn-outline,.btn-ghost{
+  background:rgba(255,255,255,.05) !important;
+  border:1px solid rgba(150,240,220,.14) !important;
+  color:#E9FBF5 !important;
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+}
+.btn-outline,.btn-ghost:hover{border-color:#5EEAD488 !important;box-shadow:0 6px 22px rgba(94,234,212,.35)}
+.kicker,.sec-tag{text-transform:uppercase;letter-spacing:.16em;font-weight:700}
+.mockup-float{animation:f3floaty 6s ease-in-out infinite}
+.f3-reveal{opacity:0;transform:translateY(26px);transition:opacity .8s cubic-bezier(.22,.61,.36,1),transform .8s cubic-bezier(.22,.61,.36,1)}
+.f3-reveal.f3-in{opacity:1;transform:translateY(0)}
+#f3-progress{position:fixed;top:0;left:0;height:3px;z-index:9999;background:linear-gradient(90deg,#5EEAD4,#7DD3FC,#FF8A65);width:0;box-shadow:0 0 12px rgba(94,234,212,.35);border-radius:0 3px 3px 0}
+.panel-head,.tab,.sample-text,.step-arrow,.sig-list li,.mockup-float{background:rgba(255,255,255,.05) !important;border:1px solid rgba(150,240,220,.12) !important}
+.post-lines span{background:rgba(255,255,255,.14) !important}
+.plan-pro{background:linear-gradient(rgba(9,44,38,.85),rgba(9,44,38,.85)) padding-box,var(--grad) border-box !important}
+footer{background:#031B18 !important}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+</style></head>
 <body>
 
 <!-- ══════════ NAVIGATION ══════════ -->
@@ -1044,5 +1164,26 @@ Si ça peut vous éviter la même galère, tant mieux. Et si vous avez une astuc
   });
 })();
 </script>
-</body>
+<script id="f3-script">
+(function(){
+  if(document.getElementById('f3-progress'))return;
+  var p=document.createElement('div');p.id='f3-progress';document.body.appendChild(p);
+  var o=document.createElement('div');
+  o.style.cssText='position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden';
+  var orbs=["rgba(94,234,212,.18)","rgba(125,211,252,.16)","rgba(255,138,101,.12)"];
+  var pos=[['-15vmax','-15vmax','55vmax','55vmax','18s','normal'],['-12vmax','30%','45vmax','45vmax','24s','reverse'],['30%','-18vmax','40vmax','40vmax','21s','normal']];
+  for(var i=0;i<3;i++){var d=document.createElement('div');d.style.cssText='position:absolute;border-radius:50%;filter:blur(90px);opacity:.5;animation:f3float '+pos[i][4]+' ease-in-out infinite '+pos[i][5];
+    d.style.left=pos[i][0];d.style.top=pos[i][1];d.style.width=pos[i][2];d.style.height=pos[i][3];
+    d.style.background='radial-gradient(circle,'+orbs[i]+',transparent 60%)';o.appendChild(d);}
+  document.body.appendChild(o);
+  addEventListener('scroll',function(){var h=document.documentElement;var sc=(h.scrollTop||document.body.scrollTop);var m=h.scrollHeight-h.clientHeight;p.style.width=(m>0?(sc/m*100):0)+'%';},{passive:true});
+  var sel=".hero,.probleme,.demo,.pains,.who,.offres,.faq,.beta";
+  if(!sel)return;
+  var els=document.querySelectorAll(sel);
+  if(!('IntersectionObserver' in window)){for(var i=0;i<els.length;i++)els[i].classList.add('f3-in');return;}
+  for(var i=0;i<els.length;i++)els[i].classList.add('f3-reveal');
+  var io=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){en.target.classList.add('f3-in');io.unobserve(en.target);}});},{threshold:.1});
+  for(var i=0;i<els.length;i++)io.observe(els[i]);
+})();
+</script></body>
 </html>
